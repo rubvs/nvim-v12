@@ -56,6 +56,17 @@ vim.lsp.enable({
 	"terraformls",
 })
 
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			workspace = {
+				library = { vim.env.VIMRUNTIME },
+				checkThirdParty = false,
+			},
+		},
+	},
+})
+
 require("everforest").setup({
 	background = "medium",
 	transparent_background_level = 2,
