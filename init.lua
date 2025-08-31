@@ -1,22 +1,22 @@
--- https://vieitesss.github.io/posts/Neovim-new-config/#completion
-
--- https://github.com/radleylewis/nvim-lite/blob/youtube_demo/init.lua
 vim.opt.shiftwidth     = 4
 vim.opt.cursorline     = true
 vim.opt.number         = true
 vim.opt.relativenumber = true
-vim.o.wrap             = true -- Enable line wrapping
-vim.o.linebreak        = true -- Break words cleanly at line wrapping
-vim.o.foldenable       = true
 vim.opt.expandtab      = false
 vim.opt.swapfile       = false
 vim.opt.tabstop        = 4
 vim.opt.shiftwidth     = 4
 vim.opt.softtabstop    = 4
 vim.opt.clipboard      = "unnamedplus"
+vim.o.wrap             = true
+vim.o.linebreak        = true
+vim.o.foldenable       = true
 vim.o.foldmethod       = 'indent'
-vim.o.foldlevel        = 1  -- Open most folds by default
-vim.o.foldlevelstart   = 99 -- Start editing with all folds open
+vim.o.foldlevel        = 1
+vim.o.foldlevelstart   = 99
+
+vim.api.nvim_set_hl(0, "StatusLineModified", { fg = "#A7C080", bold = true })
+vim.o.statusline = "%f%r %#StatusLineModified#%m%* %=[%l/%L]"
 
 vim.pack.add({
 	{ src = "https://github.com/neanias/everforest-nvim.git" },
@@ -56,6 +56,26 @@ vim.lsp.enable({
 	"terraformls",
 })
 
+require("everforest").setup({
+	background = "medium",
+	transparent_background_level = 2,
+	italics = true,
+	disable_italic_comments = false,
+	sign_column_background = "none",
+	ui_contrast = "low",
+	dim_inactive_windows = false,
+	diagnostic_text_highlight = false,
+	diagnostic_virtual_text = "coloured",
+	diagnostic_line_highlight = false,
+	spell_foreground = false,
+	show_eob = true,
+	float_style = "bright",
+	inlay_hints_background = "none",
+	on_highlights = function(highlight_groups, palette) end,
+	colours_override = function(palette) end,
+})
+require("everforest").load()
+
 require('blink.cmp').setup({
 	fuzzy = { implementation = 'prefer_rust_with_warning' },
 	signature = { enabled = true },
@@ -73,7 +93,6 @@ require('blink.cmp').setup({
 		["<C-f>"] = { "scroll_documentation_up", "fallback" },
 		["<C-l>"] = { "snippet_forward", "fallback" },
 		["<C-h>"] = { "snippet_backward", "fallback" },
-		-- ["<C-e>"] = { "hide" },
 	},
 
 	appearance = {
@@ -98,28 +117,8 @@ require('blink.cmp').setup({
 	sources = { default = { "lsp" } }
 })
 
-require("everforest").setup({
-	background = "medium",
-	transparent_background_level = 2,
-	italics = true,
-	disable_italic_comments = false,
-	sign_column_background = "none",
-	ui_contrast = "low",
-	dim_inactive_windows = false,
-	diagnostic_text_highlight = false,
-	diagnostic_virtual_text = "coloured",
-	diagnostic_line_highlight = false,
-	spell_foreground = false,
-	show_eob = true,
-	float_style = "bright",
-	inlay_hints_background = "none",
-	on_highlights = function(highlight_groups, palette) end,
-	colours_override = function(palette) end,
-})
-require("everforest").load()
-
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = 'Highlight when yanking (copying) text',
+	desc = 'Highlight when yanking text',
 	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
@@ -129,17 +128,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
 	callback = function()
-		vim.opt_local.tabstop = 2     -- how many spaces a tab visually equals
-		vim.opt_local.shiftwidth = 2  -- indent size
+		vim.opt_local.tabstop = 2
+		vim.opt_local.shiftwidth = 2
 		vim.opt_local.softtabstop = 2
-		vim.opt_local.expandtab = false -- use actual tabs, not spaces
+		vim.opt_local.expandtab = false
 	end,
 })
-
--- Set the statusline
--- https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
--- https://elianiva.my.id/posts/neovim-lua-statusline/
-vim.o.statusline               = "%f%r %m %=[%l/%L]"
 
 -- Disable Plugins
 vim.g.loaded_2html_plugin      = 1
