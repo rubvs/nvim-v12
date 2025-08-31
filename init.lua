@@ -1,6 +1,4 @@
 -- https://vieitesss.github.io/posts/Neovim-new-config/#completion
---
-vim.keymap.set('n', '<space>s', [[:.!sh<CR>]], { noremap = true, silent = false })
 
 -- https://github.com/radleylewis/nvim-lite/blob/youtube_demo/init.lua
 vim.opt.shiftwidth     = 4
@@ -31,12 +29,7 @@ vim.pack.add({
 	},
 })
 
-vim.lsp.enable({
-	"lua_ls",
-	"bashls",
-	"gopls",
-	"helm_ls",
-})
+vim.keymap.set("n", "<space>s", [[:.!sh<CR>]], { noremap = true, silent = false })
 
 vim.keymap.set("n", "<space>do", function()
 	vim.diagnostic.open_float()
@@ -54,9 +47,17 @@ vim.keymap.set("n", "gc", function()
 	vim.lsp.buf.code_action()
 end)
 
+vim.lsp.enable({
+	"lua_ls",
+	"bashls",
+	"gopls",
+	"zk",
+	"helm_ls",
+	"terraformls",
+})
+
 require('blink.cmp').setup({
 	fuzzy = { implementation = 'prefer_rust_with_warning' },
-	--	version = 'v1.6.0',
 	signature = { enabled = true },
 	keymap = {
 		preset = "default",
@@ -117,7 +118,7 @@ require("everforest").setup({
 })
 require("everforest").load()
 
-vim.api.nvim_create_autocmd('TextYankPost', {
+vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = 'Highlight when yanking (copying) text',
 	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
 	callback = function()
