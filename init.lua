@@ -8,6 +8,7 @@ vim.opt.tabstop        = 4
 vim.opt.shiftwidth     = 4
 vim.opt.softtabstop    = 4
 vim.opt.clipboard      = "unnamedplus"
+vim.o.showcmd          = false
 vim.o.wrap             = true
 vim.o.linebreak        = true
 vim.o.foldenable       = true
@@ -16,7 +17,7 @@ vim.o.foldlevel        = 1
 vim.o.foldlevelstart   = 99
 
 vim.api.nvim_set_hl(0, "StatusLineModified", { fg = "#A7C080", bold = true })
-vim.o.statusline = "%f%r %#StatusLineModified#%m%* %=[%l/%L]"
+vim.o.statusline = "%f%r %#StatusLineModified#%m%* %=[%L]"
 
 vim.pack.add({
 	{ src = "https://github.com/neanias/everforest-nvim.git" },
