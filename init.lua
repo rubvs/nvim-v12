@@ -24,6 +24,7 @@ vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/karb94/neoscroll.nvim" },
 	{ src = "https://github.com/windwp/nvim-autopairs.git" },
+	{ src = "https://github.com/ibhagwan/fzf-lua" },
 	{
 		src = "https://github.com/saghen/blink.cmp",
 		version = "v1.6.0",
@@ -32,19 +33,35 @@ vim.pack.add({
 
 vim.keymap.set("n", "<space>s", [[:.!sh<CR>]], { noremap = true, silent = false })
 
+vim.keymap.set("n", "<space>ff", function()
+	require("fzf-lua").files()
+end)
+
+vim.keymap.set("n", "<space>bb", function()
+	require("fzf-lua").buffers()
+end)
+
+vim.keymap.set("n", "<space>gg", function()
+	require("fzf-lua").live_grep()
+end)
+
 vim.keymap.set("n", "<space>do", function()
 	vim.diagnostic.open_float()
 end)
+
 vim.keymap.set("n", "<space>fb", function()
 	vim.lsp.buf.format()
 end)
-vim.keymap.set("n", "gd", function()
+
+vim.keymap.set("n", "<space>gd", function()
 	vim.lsp.buf.definition()
 end)
-vim.keymap.set("n", "gi", function()
+
+vim.keymap.set("n", "<space>gi", function()
 	vim.lsp.buf.implementation()
 end)
-vim.keymap.set("n", "gc", function()
+
+vim.keymap.set("n", "<space>gc", function()
 	vim.lsp.buf.code_action()
 end)
 
@@ -131,6 +148,21 @@ require('blink.cmp').setup({
 
 	sources = { default = { "lsp" } }
 })
+
+require('fzf-lua').setup {
+	files = {
+		hidden = false,
+	},
+	winopts = {
+		preview = {
+			layout  = "vertical",
+			title   = false,
+			winopts = {
+				number = false,
+			},
+		},
+	},
+}
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = 'Highlight when yanking text',
