@@ -113,18 +113,10 @@ require('blink.cmp').setup({
 	signature = { enabled = true },
 	keymap = {
 		preset = "default",
-		["<C-space>"] = {},
-		["<C-p>"] = {},
-		["<Tab>"] = {},
-		["<S-Tab>"] = {},
+		["<Tab>"] = { "select_and_accept" },
+		["<C-p>"] = { "select_prev", "fallback" },
+		["<C-n>"] = { "select_next", "fallback" },
 		["<C-y>"] = { "show", "show_documentation", "hide_documentation" },
-		["<C-n>"] = { "select_and_accept" },
-		["<C-k>"] = { "select_prev", "fallback" },
-		["<C-j>"] = { "select_next", "fallback" },
-		["<C-b>"] = { "scroll_documentation_down", "fallback" },
-		["<C-f>"] = { "scroll_documentation_up", "fallback" },
-		["<C-l>"] = { "snippet_forward", "fallback" },
-		["<C-h>"] = { "snippet_backward", "fallback" },
 	},
 
 	appearance = {
@@ -169,16 +161,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
-	end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "lua",
-	callback = function()
-		vim.opt_local.tabstop = 2
-		vim.opt_local.shiftwidth = 2
-		vim.opt_local.softtabstop = 2
-		vim.opt_local.expandtab = false
 	end,
 })
 
